@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
+use App\Jobs\SendEmailJob;
 use App\Services\ProductService;
 use App\Models\Product;
 
@@ -38,6 +40,7 @@ class ProductController
         return Inertia::render('Products/Form', [
             'product' => [
                 'id' => '',
+                'article' => '',
                 'name' => '',
                 'status' => '',
                 'options' => [
@@ -51,13 +54,15 @@ class ProductController
     /**
      * @param \App\Http\Requests\ProductRequest $request
      *
-     * @return \Illuminate\Contracts\Support\Responsable
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(ProductRequest $request): \Illuminate\Contracts\Support\Responsable
+    public function store(ProductRequest $request): \Illuminate\Http\RedirectResponse
     {
-        return Inertia::render('Products/Index', [
-            'products' => ProductResource::make(Product::create($request->validated())),
-        ]);
+        SendEmailJob::dispatch(
+            Product::create($request->validated())
+        );
+
+        return to_route('products.index');
     }
 
     /**
@@ -83,20 +88,22 @@ class ProductController
         $product->update($request->validated());
 
         return to_route('products.index');
-        // return Inertia::render('Products/Index', [
-        //     'product' => ProductResource::make($product),
-        // ]);
     }
 
     /**
-     * @param \App\Models\Product $product
+     * @param Product $product
+     * @param ProductService $service
      *
-     * @return \Illuminate\Contracts\Support\Responsable
+     * @return Responsable
      */
-    public function destroy(Product $product): \Illuminate\Contracts\Support\Responsable
+    public function destroy(Product $product, ProductService $service): \Illuminate\Contracts\Support\Responsable
     {
         $product->delete();
+        $products = $service->filteredProducts(request()->input('options', []), $total);
 
-        return Inertia::render('Products/Index');
+        return Inertia::render('Products/Index', [
+            'products' => ProductResource::collection($products),
+            'total' => $total,
+        ]);
     }
 }

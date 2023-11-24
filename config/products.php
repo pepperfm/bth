@@ -8,4 +8,5 @@ return [
             'test@example.com'
         ],
     ],
+    'email' => env('ADMIN_EMAIL'),
 ];

@@ -179,6 +179,7 @@
 import Layout from "./../Layout/Layout.vue";
 
 import { reactive, ref } from 'vue';
+import { ElMessage } from 'element-plus';
 
 import { router } from '@inertiajs/vue3'
 import Filter from './Filter.js'
@@ -221,7 +222,15 @@ const edit = (product) => {
   router.visit(`/products/${product.id}`)
 }
 const remove = (product) => {
-
+  router.delete(`/products/${product.id}`, {
+    onSuccess: () => {
+      ElMessage({
+        message: 'Deleted',
+        type: 'success',
+      })
+      router.visit('/products')
+    },
+  })
 }
 
 const handleCurrentChange = (page) => {

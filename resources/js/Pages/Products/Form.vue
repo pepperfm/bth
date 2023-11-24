@@ -170,10 +170,12 @@ const submit = (e) => {
     // router.put(`/products/${form.id}`, form);
   } else {
     form.post('/products', {
-      onSuccess: () => ElMessage({
-        message: 'Success',
-        type: 'success',
-      }),
+      onSuccess: () => {
+        ElMessage({
+          message: 'Success',
+          type: 'success',
+        })
+      },
       onError: (e) => Object.values(e).forEach((value) => ElMessage.error(value)),
     })
     // router.post('/products', form);
