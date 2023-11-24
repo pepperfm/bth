@@ -1,0 +1,82 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+::-webkit-scrollbar {
+    width: 0;
+}
+
+.fs-7 {
+    font-size: 0.75rem!important;;
+}
+
+.fs-8 {
+    font-size: 0.6rem!important;;
+}
+
+.fs-9 {
+    font-size: 0.5rem!important;;
+}
+
+.el-header {
+//height: auto;
+}
+.aside {
+    transition: all 400ms ease-in-out;
+    background-color: rgb(52, 58, 64);
+}
+.el-submenu__title {
+    padding: 0;
+}
+.el-menu.el-menu--horizontal {
+    border-bottom: none;
+}
+
+.el-header {
+    border-bottom: 1px solid #dee2e6;
+}
+.main-nav-logo {
+    border-bottom: 1px solid #4b545c;
+}
+.main-header {
+//height: 100%;
+}
+.card-header {
+    padding: 1rem;
+    background-color: #fff;
+}
+.card-header .row div:nth-child(2) {
+    text-align: right!important;
+}
+.actions {
+    text-align: center;
+}
+
+.el-scrollbar > .el-scrollbar__wrap > .el-scrollbar__view > .el-menu {
+    height: 100vh !important;
+}
+
+
+
+.has-error .el-input__wrapper {
+    border: 1px solid var(--el-color-danger) !important;
+}
+body {
+    height: 100vh;
+    min-height: 100%;
+}
+.main-container {
+    padding-top: 0!important;
+    height: 100vh;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: var(--el-text-color-primary) !important;
+}
+.forgot .el-form-item__content {
+    justify-content: center!important;
+}
